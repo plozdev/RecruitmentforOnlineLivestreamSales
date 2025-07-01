@@ -4,7 +4,7 @@ import tools.Input;
 import tools.ValidationsUtils;
 
 public class ConsoleUI {
-    private String menuOptions ="1. New Registration\n" +
+    private final String menuOptions ="1. New Registration\n" +
             "2. Update Registration Information\n" +
             "3. Display Registered List\n" +
             "3. Display Registered List\n" +
@@ -16,7 +16,7 @@ public class ConsoleUI {
             "9. Exit the Program\n" +
             "0. Exit";
     private boolean isRunning = true;
-    private Input input;
+    private final Input input;
     public ConsoleUI() {
         input = new Input();
     }
