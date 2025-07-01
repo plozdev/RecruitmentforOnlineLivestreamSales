@@ -7,7 +7,7 @@ public class Input implements ValidationsUtils {
     public Input() {
         scanner = new Scanner(System.in);
     }
-
+    public void close() { scanner.close(); }
     public String getString(String msg, String pattern, String errorMsg, boolean allowEmpty) {
         System.out.print(msg);
         String input = scanner.nextLine();
