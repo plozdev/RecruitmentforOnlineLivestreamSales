@@ -1,7 +1,7 @@
 package ui;
 
+import model.kol;
 import tools.Input;
-import tools.ValidationsUtils;
 
 public class ConsoleUI {
     private final String menuOptions ="1. New Registration\n" +
@@ -25,10 +25,21 @@ public class ConsoleUI {
     public void start() {
         while (isRunning) {
             System.out.println(menuOptions);
-            int choice = input.getInt("Please enter a number (1-9): ", ValidationsUtils.POSITIVE_INT,"Invalid input!",false);
+            Integer choice = input.readValidInput("Please enter a number (1-9): ",
+                    n -> n > 0 && n < 10,
+                    Integer::parseInt,
+                    false);
+
+            if (choice==null) {
+                isRunning = false;
+                continue;
+            }
+
             switch (choice) {
                 case 1:
                     //TODO: Register
+                    kol newRegistration = input.getKol(false);
+                    System.out.println(newRegistration);
                     break;
                 case 2:
                     //TODO: Update

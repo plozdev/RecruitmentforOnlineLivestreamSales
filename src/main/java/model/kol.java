@@ -79,6 +79,11 @@ public class kol {
     }
 
     @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         kol kol = (kol) o;
