@@ -25,15 +25,7 @@ public class ConsoleUI {
     public void start() {
         while (isRunning) {
             System.out.println(menuOptions);
-            Integer choice = input.readValidInput("Please enter a number (1-9): ",
-                    n -> n > 0 && n < 10,
-                    Integer::parseInt,
-                    false);
-
-            if (choice==null) {
-                isRunning = false;
-                continue;
-            }
+            short choice = (short) input.getLong("Enter choice (1-9): ","Invalid format!",false);
 
             switch (choice) {
                 case 1:
@@ -66,7 +58,7 @@ public class ConsoleUI {
                     isRunning = false;
                     break;
                 default:
-                    System.out.println("Please enter a number from 0 to 9!");
+                    System.out.println("Please enter a number from 1 to 9!");
             }
         }
         System.out.println("Goodbye...");

@@ -22,6 +22,15 @@ public class kol {
         this.followers = followers;
     }
 
+    public kol(String name, String phoneNum, String email, String platformCode, long followers) {
+        this.kolID = "N/A";
+        this.name = name;
+        this.phoneNum = phoneNum;
+        this.email = email;
+        this.platformCode = platformCode;
+        this.followers = followers;
+    }
+
     public String getKolID() {
         return kolID;
     }

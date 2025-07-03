@@ -12,121 +12,69 @@ public class Input implements ValidationsUtils{
     }
     public void close() { scanner.close(); }
 
-    /*
     public String getString(String msg, String pattern, String errorMsg, boolean allowEmpty) {
-        System.out.print(msg);
-        String input = scanner.nextLine();
+        while (true) {
+            System.out.print(msg);
+            String input = scanner.nextLine().trim();
 
-        if (input.isEmpty()) {
-            if (allowEmpty)
-                return "";
-            else {
-                System.out.println(errorMsg);
+            if (input.isEmpty()) {
+                if (allowEmpty)
+                    return "";
+                else {
+                    System.out.println(errorMsg);
+                    continue;
+                }
             }
-        }
 
-        return validateWithCallback(input, data->isValid(data,pattern));
+            if (pattern != null) {
+                if (!isValid(input, pattern)) {
+                    System.out.println(errorMsg);
+                    continue;
+                }
+            }
+
+            return input;
+        }
     }
 
-    public int getInt(String msg, String pattern, String errorMsg, boolean allowEmpty) {
-        System.out.print(msg);
-        String input = scanner.nextLine();
-        if (input.isEmpty()) {
-            if (allowEmpty)
-                return 0;
-            else {
+    public long getLong(String msg, String errorMsg, boolean allowEmpty) {
+        while (true) {
+            System.out.print(msg);
+            String input = scanner.nextLine();
+            if (input.isEmpty()) {
+                if (allowEmpty)
+                    return 0L;
+                else {
+                    System.out.println(errorMsg);
+                    continue;
+                }
+            }
+            if (!isValid(input,ValidationsUtils.POSITIVE_INT)) {
                 System.out.println(errorMsg);
+                continue;
+            }
+            try {
+                return Long.parseUnsignedLong(input);
+            } catch (NumberFormatException e) {
+                System.err.println("Parsing error.\n" + e.getMessage() + ". Try again!");
             }
         }
-        try {
-            return Integer.parseInt(validateWithCallback(input, data->isValid(data,pattern)));
-        } catch (NumberFormatException e) {
-            System.err.println(errorMsg);
-            return -1;
-        }
     }
-    */
+
     public kol getKol(boolean isUpdate) {
-        System.out.print("Enter KOL information");
+        System.out.println("Enter KOL information");
         if (isUpdate) {
             System.out.println(" (leave blank to keep old data)");
         }
 
-        String id = readValidInput("Enter KOL Id: ",
-                s->isValid(s,ValidationsUtils.ID),
-                Function.identity(),
-                isUpdate); //No need to convert
+        String name = getString("Enter name: ",ValidationsUtils.NAME,"Invalid format!",false);
+        String phone = getString("Enter phone number: ",ValidationsUtils.PHONE,"Invalid format!",false);
+        String email = getString("Enter email: ",ValidationsUtils.EMAIL,"Invalid format!",false);
+        String code = getString("Enter platform code: ",null,null,false);
+        long followersCnt = getLong("Enter followers: ","Invalid number!",false);
 
-        String name = readValidInput("Enter KOL Name: ",
-                s->isValid(s,ValidationsUtils.NAME),
-                Function.identity(),
-                isUpdate);
-
-        String phone  = readValidInput("Enter KOL Id: ",
-                s->isValid(s,ValidationsUtils.PHONE),
-                Function.identity(),
-                isUpdate);
-
-        String email = readValidInput("Enter KOL Email: ",
-                s->isValid(s,ValidationsUtils.EMAIL),
-                Function.identity(),
-                isUpdate);
-
-        String code = ""; //TODO: Code platform Logic
-
-        long followersCnt = readValidInput("Enter KOL Name: ",
-                n-> n > 0,
-                Long::parseUnsignedLong,
-                isUpdate);
-
-        return new kol(id,name,phone,email,code,followersCnt);
+        return new kol(name,phone,email,code,followersCnt);
     }
-
-    ///////////////////////
-    /// Call back interface
-    /// Validator data
-    /// //////////////////
-    public interface Validator <T> {
-        boolean validate(T t);
-    }
-    public <T> T readValidInput(String prompt, Validator<T> validator, Function<String, T> converter, boolean allowEmpty) {
-        int attempts = 0;
-        final int MAX_ATTEMPTS = 4;
-
-        while (attempts < MAX_ATTEMPTS) {
-            System.out.print(prompt);
-            String raw = scanner.nextLine();
-
-            /*
-            if (raw.equalsIgnoreCase("q")) {
-                System.out.println("Returning to the menu...");
-                return null;
-            }
-
-             */
-
-            if (raw.isEmpty() && allowEmpty) {
-                return null;
-            }
-
-            try {
-                T converted = converter.apply(raw);
-                if (validator.validate(converted)) {
-                    return converted;
-                }
-            } catch (Exception e) {
-                // TODO: Catch parsing errors
-            }
-
-            System.out.println("❌ Invalid format. Please try again!");
-            attempts++;
-        }
-
-        System.out.println("⚠️ You enter too many times.");
-        return null;
-    }
-
-
 
     /////////////////////////
     ///
