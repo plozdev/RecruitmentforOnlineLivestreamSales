@@ -1,19 +1,21 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class kol {
+public class KOL implements Serializable {
+    private static final long serialVersionUID = 1L;
     String kolID, name, phoneNum, email, platformCode;
     long followers;
     int rate;
 
-    public kol() {
+    public KOL() {
         this.kolID = this.name = this.phoneNum = this.email = this.platformCode = "";
         this.followers = 0;
         this.rate = 20; //default
     }
 
-    public kol(String kolID, String name, String phoneNum, String email, String platformCode, long followers) {
+    public KOL(String kolID, String name, String phoneNum, String email, String platformCode, long followers) {
         this.kolID = kolID;
         this.name = name;
         this.phoneNum = phoneNum;
@@ -22,7 +24,7 @@ public class kol {
         this.followers = followers;
     }
 
-    public kol(String name, String phoneNum, String email, String platformCode, long followers) {
+    public KOL(String name, String phoneNum, String email, String platformCode, long followers) {
         this.kolID = "N/A";
         this.name = name;
         this.phoneNum = phoneNum;
@@ -95,7 +97,7 @@ public class kol {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        kol kol = (kol) o;
+        KOL kol = (KOL) o;
         return Objects.equals(kolID, kol.kolID);
     }
 

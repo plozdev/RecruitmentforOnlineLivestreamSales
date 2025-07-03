@@ -1,6 +1,6 @@
 package tools;
 
-import model.kol;
+import model.KOL;
 
 import java.util.Scanner;
 
@@ -60,7 +60,7 @@ public class Input implements ValidationsUtils{
         }
     }
 
-    public kol getKol(boolean isUpdate) {
+    public KOL getKol(boolean isUpdate) {
         System.out.println("Enter KOL information");
         if (isUpdate) {
             System.out.println(" (leave blank to keep old data)");
@@ -72,7 +72,7 @@ public class Input implements ValidationsUtils{
         String code = getString("Enter platform code: ",null,null,false);
         long followersCnt = getLong("Enter followers: ","Invalid number!",false);
 
-        return new kol(name,phone,email,code,followersCnt);
+        return new KOL(name,phone,email,code,followersCnt);
     }
 
     /////////////////////////

@@ -1,14 +1,14 @@
-package businesss;
+package manager;
 
-import model.kol;
+import model.KOL;
 
 import java.util.HashMap;
 
 /******************************
  * Class for handle kol logic
  */
-public class kols extends HashMap<String, kol> {
-    public kols() {
+public class KOLManager extends HashMap<String, KOL> {
+    public KOLManager() {
         //TODO: load data
     }
 

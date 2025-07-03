@@ -1,6 +1,6 @@
 package ui;
 
-import model.kol;
+import model.KOL;
 import tools.Input;
 
 public class ConsoleUI {
@@ -32,7 +32,7 @@ public class ConsoleUI {
             switch (choice) {
                 case 1:
                     //TODO: Register
-                    kol newRegistration = input.getKol(false);
+                    KOL newRegistration = input.getKol(false);
                     System.out.println(newRegistration);
                     break;
                 case 2:
