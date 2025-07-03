@@ -3,7 +3,6 @@ package tools;
 import model.kol;
 
 import java.util.Scanner;
-import java.util.function.Function;
 
 public class Input implements ValidationsUtils{
     private final Scanner scanner;
