@@ -25,6 +25,8 @@ public class ConsoleUI {
     public void start() {
         while (isRunning) {
             System.out.println(menuOptions);
+
+            //TODO: FATAL
             short choice = (short) input.getLong("Enter choice (1-9): ","Invalid format!",false);
 
             switch (choice) {
