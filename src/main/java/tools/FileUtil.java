@@ -14,7 +14,7 @@ public class FileUtil {
     private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     //----------- Doc CSV tu Classpath ---------------
-    public List<String> readKOLList(String resName){
+    public List<String> readPlatformList(String resName){
         List<String> lines = new ArrayList<>();
 
         //Dung Classloader
