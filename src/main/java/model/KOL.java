@@ -22,6 +22,7 @@ public class KOL implements Serializable {
         this.email = email;
         this.platformCode = platformCode;
         this.followers = followers;
+        updateRate();
     }
 
     public KOL(String name, String phoneNum, String email, String platformCode, long followers) {
