@@ -7,32 +7,32 @@ import java.util.Objects;
 
 public class KOL implements Serializable {
     private static final long serialVersionUID = 1L;
-    String kolID, name, phoneNum, email, platformCode;
+    String kolID, name, phoneNum, email, platform;
     long followers;
     int rate;
 
     public KOL() {
-        this.kolID = this.name = this.phoneNum = this.email = this.platformCode = "";
+        this.kolID = this.name = this.phoneNum = this.email = this.platform = "";
         this.followers = 0;
         this.rate = 20; //default
     }
 
-    public KOL(String kolID, String name, String phoneNum, String email, String platformCode, long followers) {
+    public KOL(String kolID, String name, String phoneNum, String email, String platform, long followers) {
         this.kolID = kolID;
         this.name = name;
         this.phoneNum = phoneNum;
         this.email = email;
-        this.platformCode = platformCode;
+        this.platform = platform;
         this.followers = followers;
         updateRate();
     }
 
-    public KOL(String name, String phoneNum, String email, String platformCode, long followers) {
+    public KOL(String name, String phoneNum, String email, String platform, long followers) {
         this.kolID = "N/A";
         this.name = name;
         this.phoneNum = phoneNum;
         this.email = email;
-        this.platformCode = platformCode;
+        this.platform = platform;
         this.followers = followers;
         updateRate();
     }
@@ -69,12 +69,12 @@ public class KOL implements Serializable {
         this.email = email;
     }
 
-    public String getPlatformCode() {
-        return platformCode;
+    public String getPlatform() {
+        return platform;
     }
 
-    public void setPlatformCode(String platformCode) {
-        this.platformCode = platformCode;
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 
     public long getFollowers() {
@@ -96,9 +96,7 @@ public class KOL implements Serializable {
     @Override
     public String toString() {
         return String.format("%-10s | %-18s | %-10s | %-10s | %-12d | %-10d",
-                kolID, name, phoneNum,
-                KOLManager.getPlatformHashMap().get(platformCode).getName(),
-                followers, rate);
+                kolID, name, phoneNum,platform,followers, rate);
     }
 
     public String KOLDetail() {
@@ -108,9 +106,7 @@ public class KOL implements Serializable {
                 "Platform  : %s\n" +
                 "Followers : %d\n" +
                 "Commission: %d\n",
-                kolID,name,phoneNum,
-                KOLManager.getPlatformHashMap().get(platformCode).getName(),
-                followers, rate);
+                kolID,name,phoneNum,platform, followers, rate);
     }
     @Override
     public boolean equals(Object o) {

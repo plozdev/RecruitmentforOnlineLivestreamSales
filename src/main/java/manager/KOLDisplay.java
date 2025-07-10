@@ -5,11 +5,10 @@ import model.KOL;
 import java.util.List;
 
 public class KOLDisplay {
-
     public KOLDisplay() {
     }
 
-    private <T> boolean handleEmptyList(List<T> list, String message) {
+    public <T> boolean handleEmptyList(List<T> list, String message) {
         if (list.isEmpty()) {
             System.out.println(message);
             return true; // Trả về true để báo hiệu đã xử lý và cần return ở hàm gọi

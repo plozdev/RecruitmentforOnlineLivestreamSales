@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  ******************************/
 public class KOLManager implements Workable {
     private final HashMap<String, KOL> KOLList; //Key: kol_id, Value: KOL object
-    private static  HashMap<String, Platform> platformList; //Key: platform Code, Value: platform objet
+    private final HashMap<String, Platform> platformList; //Key: platform Code, Value: platform objet
     private final KOLDisplay displayer;
     private final FileUtil fileUtil;
     private final Logger logger = Logger.getLogger(this.getClass().getName());
@@ -55,6 +55,10 @@ public class KOLManager implements Workable {
 
     @Override
     public boolean update() {
+        if (displayer.handleEmptyList(getKOLList(),"No KOLs have registered yet. Please try later...")) {
+            return false;
+        }
+
         String id = input.getString("Enter KOL Id to update: ",ValidationsUtils.ID,
                 "Invalid format!", false);
         if (!KOLList.containsKey(id)) {
@@ -67,7 +71,7 @@ public class KOLManager implements Workable {
         if (newKOL.getName().isEmpty()) newKOL.setName(oldKOL.getName());
         if (newKOL.getPhoneNum().isEmpty()) newKOL.setPhoneNum(oldKOL.getPhoneNum());
         if (newKOL.getEmail().isEmpty()) newKOL.setEmail(oldKOL.getEmail());
-        if (newKOL.getPlatformCode().isEmpty()) newKOL.setPlatformCode(oldKOL.getPlatformCode());
+        if (newKOL.getPlatform().isEmpty()) newKOL.setPlatform(oldKOL.getPlatform());
         if (newKOL.getFollowers() == -1L) newKOL.setFollowers(oldKOL.getFollowers());
         newKOL.updateRate();
         newKOL.setKolID(id);
@@ -136,12 +140,16 @@ public class KOLManager implements Workable {
         saveKOLList();
     }
 
-    public static List<Platform> getPlatformList() {
+    public List<Platform> getPlatformList() {
         return new ArrayList<>(platformList.values());
     }
 
-    public static HashMap<String, Platform> getPlatformHashMap() {
+    public HashMap<String, Platform> getPlatformHashMap() {
         return platformList;
+    }
+
+    public List<KOL> getKOLList() {
+        return new ArrayList<>(KOLList.values());
     }
 
     private void loadPlatformList() {
@@ -163,7 +171,6 @@ public class KOLManager implements Workable {
         logger.info("KOLList.csv loaded successfully! - " + platformList.size());
 
     }
-
     private void loadKOLList() {
         List<KOL> KOLListLoaded = fileUtil.readObjectListFromFile("KOLs.dat");
         for (KOL kol : KOLListLoaded) {

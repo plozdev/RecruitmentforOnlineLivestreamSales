@@ -70,19 +70,23 @@ public class Input implements ValidationsUtils{
         String phone = getString("Enter phone number: ",ValidationsUtils.PHONE,"Invalid format!",isUpdate);
         String email = getString("Enter email: ",ValidationsUtils.EMAIL,"Invalid format!",isUpdate);
 
-        String code = "";
+        String platform = "";
         boolean isExitsPlatformCode = false;
+
+        //TODO:FIX THE RE-CONSTRUCTOR MSG OF MANAGER
+        KOLManager kolManager = new KOLManager();
         while (!isExitsPlatformCode) {
-            code = getString("Enter platform code (YT01,TK01,FB01,IG01): ",null,"Invalid format!",isUpdate);
-            if (KOLManager.getPlatformHashMap().containsKey(code) || code.isEmpty() && isUpdate) {
+            platform = getString("Enter platform code (YT01,TK01,FB01,IG01): ",null,"Invalid format!",isUpdate);
+            if (kolManager.getPlatformHashMap().containsKey(platform) || platform.isEmpty() && isUpdate) {
                 isExitsPlatformCode = true;
+                platform = kolManager.getPlatformHashMap().get(platform).getName();
             } else
                 System.out.println("The code isn't exists.");
         }
 
         long followersCnt = getLong("Enter followers: ","Invalid number!",isUpdate);
 
-        return new KOL(name,phone,email,code,followersCnt);
+        return new KOL(name,phone,email,platform,followersCnt);
     }
 
     public boolean getYesNo() {

@@ -42,10 +42,6 @@ public class ConsoleUI {
                     break;
                 case 2:
                     //TODO: Update
-                    if (controller.isEmptyKOL()) {
-                        System.out.println("No KOLs have registered yet. Please try later...");
-                        break;
-                    }
                     if (controller.update())
                         System.out.println("Update registration successful!");
                     else
