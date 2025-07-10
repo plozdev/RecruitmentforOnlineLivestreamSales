@@ -1,5 +1,7 @@
 package model;
 
+import manager.KOLManager;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -93,9 +95,23 @@ public class KOL implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString();
+        return String.format("%-10s | %-18s | %-10s | %-10s | %-12d | %-10d",
+                kolID, name, phoneNum,
+                KOLManager.getPlatformHashMap().get(platformCode).getName(),
+                followers, rate);
     }
 
+    public String KOLDetail() {
+        return String.format("KOL ID    : %s\n" +
+                "Name      : %s\n" +
+                "Phone     : %s\n" +
+                "Platform  : %s\n" +
+                "Followers : %d\n" +
+                "Commission: %d\n",
+                kolID,name,phoneNum,
+                KOLManager.getPlatformHashMap().get(platformCode).getName(),
+                followers, rate);
+    }
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

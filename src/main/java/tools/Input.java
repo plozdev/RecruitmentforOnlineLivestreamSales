@@ -1,5 +1,6 @@
 package tools;
 
+import manager.KOLManager;
 import model.KOL;
 
 import java.util.Scanner;
@@ -42,7 +43,7 @@ public class Input implements ValidationsUtils{
             String input = scanner.nextLine();
             if (input.isEmpty()) {
                 if (allowEmpty)
-                    return 0L;
+                    return -1L;
                 else {
                     System.out.println(errorMsg);
                     continue;
@@ -61,18 +62,41 @@ public class Input implements ValidationsUtils{
     }
 
     public KOL getKol(boolean isUpdate) {
-        System.out.println("Enter KOL information");
         if (isUpdate) {
-            System.out.println(" (leave blank to keep old data)");
+            System.out.println("(leave blank to keep old data)");
         }
 
-        String name = getString("Enter name: ",ValidationsUtils.NAME,"Invalid format!",false);
-        String phone = getString("Enter phone number: ",ValidationsUtils.PHONE,"Invalid format!",false);
-        String email = getString("Enter email: ",ValidationsUtils.EMAIL,"Invalid format!",false);
-        String code = getString("Enter platform code: ",null,null,false);
-        long followersCnt = getLong("Enter followers: ","Invalid number!",false);
+        String name = getString("Enter name: ",ValidationsUtils.NAME,"Invalid format!",isUpdate);
+        String phone = getString("Enter phone number: ",ValidationsUtils.PHONE,"Invalid format!",isUpdate);
+        String email = getString("Enter email: ",ValidationsUtils.EMAIL,"Invalid format!",isUpdate);
+
+        String code = "";
+        boolean isExitsPlatformCode = false;
+        while (!isExitsPlatformCode) {
+            code = getString("Enter platform code (YT01,TK01,FB01,IG01): ",null,"Invalid format!",isUpdate);
+            if (KOLManager.getPlatformHashMap().containsKey(code) || code.isEmpty() && isUpdate) {
+                isExitsPlatformCode = true;
+            } else
+                System.out.println("The code isn't exists.");
+        }
+
+        long followersCnt = getLong("Enter followers: ","Invalid number!",isUpdate);
 
         return new KOL(name,phone,email,code,followersCnt);
+    }
+
+    public boolean getYesNo() {
+        String input ;
+
+        while (true) {
+            input = scanner.nextLine();
+            if (!input.equalsIgnoreCase("y") && !input.equalsIgnoreCase("n")) {
+                System.out.println("Please enter 'y' or 'n'.");
+                continue;
+            }
+            break;
+        }
+        return (input.equalsIgnoreCase("y"));
     }
 
     /////////////////////////

@@ -1,6 +1,6 @@
 package ui;
 
-import model.KOL;
+import manager.KOLManager;
 import tools.Input;
 
 public class ConsoleUI {
@@ -13,10 +13,12 @@ public class ConsoleUI {
             "7. Statistics of Registration Numbers by Platform\n" +
             "8. Save Data to File\n" +
             "9. Exit the Program\n";
+    private final KOLManager controller;
     private boolean isRunning = true;
     private final Input input;
     public ConsoleUI() {
         input = new Input();
+        controller = new KOLManager();
     }
 
     /**********************
@@ -32,20 +34,38 @@ public class ConsoleUI {
             switch (choice) {
                 case 1:
                     //TODO: Register
-                    KOL newRegistration = input.getKol(false);
-                    System.out.println(newRegistration);
+                    if (controller.add())
+                        System.out.println("Registration successful!");
+                    else
+                        System.out.println("Registration failed! Returning to the menu...");
+
                     break;
                 case 2:
                     //TODO: Update
+                    if (controller.isEmptyKOL()) {
+                        System.out.println("No KOLs have registered yet. Please try later...");
+                        break;
+                    }
+                    if (controller.update())
+                        System.out.println("Update registration successful!");
+                    else
+                        System.out.println("Update registration failed! Returning to the menu...");
+
                     break;
                 case 3:
                     //TODO: Display
+                    controller.listAllKOLs();
                     break;
                 case 4:
                     //TODO: Delete
+                    if (controller.delete())
+                        System.out.println("Delete registration successful!");
+                    else
+                        System.out.println("Delete registration failed! Returning to the menu...");
                     break;
                 case 5:
                     //TODO: Search
+                    controller.searchingKOL();
                     break;
                 case 6:
                     //TODO: Filter data
