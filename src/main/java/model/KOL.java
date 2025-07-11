@@ -3,6 +3,7 @@ package model;
 import manager.KOLManager;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.Objects;
 
 public class KOL implements Serializable {
@@ -95,8 +96,9 @@ public class KOL implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%-10s | %-18s | %-10s | %-10s | %-12d | %-10d",
-                kolID, name, phoneNum,platform,followers, rate);
+        NumberFormat formatter = NumberFormat.getInstance();
+        return String.format("%-10s | %-18s | %-10s | %-10s | %-12s | %-10s",
+                kolID, name, phoneNum,platform,formatter.format(followers), rate+"%");
     }
 
     public String KOLDetail() {
@@ -105,8 +107,8 @@ public class KOL implements Serializable {
                 "Phone     : %s\n" +
                 "Platform  : %s\n" +
                 "Followers : %d\n" +
-                "Commission: %d\n",
-                kolID,name,phoneNum,platform, followers, rate);
+                "Commission: %s\n",
+                kolID,name,phoneNum,platform, followers, rate+"%");
     }
     @Override
     public boolean equals(Object o) {

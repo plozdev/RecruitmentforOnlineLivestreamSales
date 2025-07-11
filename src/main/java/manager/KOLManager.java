@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class KOLManager implements Workable {
     private final HashMap<String, KOL> KOLList; //Key: kol_id, Value: KOL object
     private final HashMap<String, Platform> platformList; //Key: platform Code, Value: platform objet
-    private final KOLDisplay displayer;
+    private final KOLDisplay display;
     private final FileUtil fileUtil;
     private final Logger logger = Logger.getLogger(this.getClass().getName());
     private final Input input;
@@ -30,7 +30,7 @@ public class KOLManager implements Workable {
         //TODO: load data
         this.KOLList = new HashMap<>();
         platformList = new HashMap<>();
-        displayer = new KOLDisplay();
+        display = new KOLDisplay();
         this.fileUtil = new FileUtil();
         this.input = new Input();
         readData(); //LOAD KOL List
@@ -42,6 +42,7 @@ public class KOLManager implements Workable {
     @Override
     public boolean add() {
         String id = input.getString("Enter KOL Id: ", ValidationsUtils.ID,"Invalid format!",false);
+        id = id.toUpperCase(); //Make sure to valid in any format
         if (KOLList.containsKey(id)) {
             System.out.println("This KOL has not registered yet.");
             return false;
@@ -55,12 +56,9 @@ public class KOLManager implements Workable {
 
     @Override
     public boolean update() {
-        if (displayer.handleEmptyList(getKOLList(),"No KOLs have registered yet. Please try later...")) {
-            return false;
-        }
-
         String id = input.getString("Enter KOL Id to update: ",ValidationsUtils.ID,
                 "Invalid format!", false);
+        id = id.toUpperCase();
         if (!KOLList.containsKey(id)) {
             System.out.println("This KOL haven't registered yet. Try another id!");
             return false;
@@ -88,7 +86,7 @@ public class KOLManager implements Workable {
             System.out.println("This KOL haven't registered yet. Try another id!");
             return false;
         }
-        displayer.displayKOLDetails(KOLList.get(id));
+        display.displayKOLDetails(KOLList.get(id));
         System.out.println("Are you sure to delete this KOL? (y/n): ");
         if (input.getYesNo()) {
             KOLList.remove(id);
@@ -99,34 +97,31 @@ public class KOLManager implements Workable {
 
     @Override
     public void listAllKOLs() {
-        if (KOLList.isEmpty()) {
-            System.out.println("No KOLs have registered yet.");
-            return ;
-        }
-        displayer.displayKOLs(new ArrayList<>(KOLList.values()));
+        display.displayKOLs(getKOLList(),"No KOLs have registered yet. Please try later...");
     }
 
-    public void searchingKOL() {
+    public List<KOL> searchingKOL() {
         String name = input.getString("Enter the name or partial name of the KOL: ",null, "Invalid format!",false);
         List<KOL> searchedList = new ArrayList<>();
-        for (KOL kol : KOLList.values()) {
+        for (KOL kol : getKOLList()) {
             if (kol.getName().toLowerCase().contains(name.toLowerCase()))
                 searchedList.add(kol);
         }
-        if (searchedList.isEmpty()) {
-            System.out.println("No one match the search criteria!");
-        } else {
-            displayer.displayKOLs(searchedList);
+        return searchedList;
+    }
+
+    public List<KOL> filterByCategories() {
+        String category = input.getString("Enter a category code (BT, FS, BC, GM, TL): ",ValidationsUtils.CATEGORY,"Invalid format!",false);
+        List<KOL> filteredList = new ArrayList<>();
+        for (KOL kol : getKOLList()) {
+            if (kol.getKolID().toLowerCase().contains(category.toLowerCase()))
+                filteredList.add(kol);
         }
-
-    }
-
-    public void filterByCategories() {
-
+        return filteredList;
     }
 
 
-    public boolean isEmptyKOL() {
+    public boolean isEmpty() {
         return KOLList.isEmpty();
     }
 

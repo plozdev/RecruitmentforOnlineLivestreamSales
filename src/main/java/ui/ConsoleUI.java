@@ -1,6 +1,8 @@
 package ui;
 
+import manager.KOLDisplay;
 import manager.KOLManager;
+import manager.PlatformDisplay;
 import tools.Input;
 
 public class ConsoleUI {
@@ -14,28 +16,38 @@ public class ConsoleUI {
             "8. Save Data to File\n" +
             "9. Exit the Program\n";
     private final KOLManager controller;
+    private final KOLDisplay display;
+    private final PlatformDisplay platformDisplay;
     private boolean isRunning = true;
     private final Input input;
     public ConsoleUI() {
         input = new Input();
         controller = new KOLManager();
+        display = new KOLDisplay();
+        platformDisplay = new PlatformDisplay();
     }
 
     /**********************
      * Starting point
      */
     public void start() {
+        boolean kolExists = !controller.isEmpty();
         while (isRunning) {
             System.out.println(menuOptions);
 
             //TODO: FATAL
             short choice = (short) input.getLong("Enter choice (1-9): ","Invalid format!",false);
-
+            if (choice != 1 && !kolExists && choice != 9) {
+                System.out.println("No KOLs have registered yet. Please try later...");
+                continue;
+            }
             switch (choice) {
                 case 1:
                     //TODO: Register
-                    if (controller.add())
+                    if (controller.add()) {
                         System.out.println("Registration successful!");
+                        kolExists = true;
+                    }
                     else
                         System.out.println("Registration failed! Returning to the menu...");
 
@@ -61,13 +73,15 @@ public class ConsoleUI {
                     break;
                 case 5:
                     //TODO: Search
-                    controller.searchingKOL();
+                    display.displayKOLs(controller.searchingKOL(),"No one match the search criteria!");
                     break;
                 case 6:
                     //TODO: Filter data
+                    display.displayKOLs(controller.filterByCategories() ,"No KOLs have registered under this category!");
                     break;
                 case 7:
                     //TODO: Statistics
+                    platformDisplay.stat(controller);
                     break;
                 case 8:
                     //TODO: Update

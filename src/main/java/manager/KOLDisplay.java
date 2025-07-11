@@ -16,13 +16,14 @@ public class KOLDisplay {
         return false; // Trả về false nếu danh sách không rỗng
     }
 
-    public void displayKOLs(List<KOL> kolList) {
-        if (handleEmptyList(kolList, "No KOLs have registered yet.")) {
+    public void displayKOLs(List<KOL> kolList, String emptyMsg) {
+        if (handleEmptyList(kolList, emptyMsg)) {
             return; // Dừng lại nếu danh sách rỗng
         }
 
         System.out.println("-------------------------------------------------------------------------------------");
         System.out.printf("%-10s | %-18s | %-10s | %-10s | %-12s | %-10s\n","KOL ID","Name","Phone","Platform","Followers","Commission");
+        System.out.println("-------------------------------------------------------------------------------------");
         for (KOL k : kolList) System.out.println(k);
         System.out.println("-------------------------------------------------------------------------------------");
     }

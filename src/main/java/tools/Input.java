@@ -73,15 +73,22 @@ public class Input implements ValidationsUtils{
         String platform = "";
         boolean isExitsPlatformCode = false;
 
-        //TODO:FIX THE RE-CONSTRUCTOR MSG OF MANAGER
-        KOLManager kolManager = new KOLManager();
         while (!isExitsPlatformCode) {
             platform = getString("Enter platform code (YT01,TK01,FB01,IG01): ",null,"Invalid format!",isUpdate);
-            if (kolManager.getPlatformHashMap().containsKey(platform) || platform.isEmpty() && isUpdate) {
-                isExitsPlatformCode = true;
-                platform = kolManager.getPlatformHashMap().get(platform).getName();
-            } else
-                System.out.println("The code isn't exists.");
+            if (platform.equalsIgnoreCase("YT01"))
+                platform = "Youtube";
+            else if (platform.equalsIgnoreCase("TK01"))
+                platform = "Tiktok";
+            else if (platform.equalsIgnoreCase("FB01"))
+                platform = "Facebook";
+            else if (platform.equalsIgnoreCase("IG01"))
+                platform = "Instagram";
+
+            if (!platform.isEmpty() || platform.isEmpty() && isUpdate)
+                break; //Break point
+
+            System.out.println("The code isn't exists.");
+
         }
 
         long followersCnt = getLong("Enter followers: ","Invalid number!",isUpdate);
@@ -113,6 +120,6 @@ public class Input implements ValidationsUtils{
             System.out.println("Invalid input");
             return false;
         }
-        return s.matches(regex);
+        return s.toLowerCase().matches(regex);
     }
 }
