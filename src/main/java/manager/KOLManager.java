@@ -51,7 +51,7 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
     public boolean update() {
         String id = input.getString("Enter KOL Id to update: ",ValidationsUtils.ID,
                 "Invalid format!", false);
-        id = id.toUpperCase();
+        id = id.toUpperCase();//Make sure to valid in any format
         if (!this.containsKey(id)) {
             System.out.println("This KOL haven't registered yet. Try another id!");
             return false;
@@ -80,6 +80,8 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
     public boolean delete() {
         String id = input.getString("Enter KOL Id to remove: ",ValidationsUtils.ID,
                 "Invalid format!", false);
+        id = id.toUpperCase(); //Make sure to valid in any format
+
         if (!this.containsKey(id)) {
             System.out.println("This KOL haven't registered yet. Try another id!");
             return false;
@@ -134,17 +136,16 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
 
     @Override
     public void saveData() {
-        //TODO: remove timer
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("Saving data...");
-            }
-        };
-        timer.schedule(task, 2000);
-        fileUtil.writeObjectListToFile(new ArrayList<>(this.values()),"kol_registrations.dat");
-        System.out.println("Registration data has been successfully saved to 'kol_registrations.dat'");
+        System.out.println("Saving data...");
+        try {
+            Thread.sleep(1500); // Pauses execution for 3 seconds
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        if (fileUtil.writeObjectListToFile(new ArrayList<>(this.values()),"kol_registrations.dat"))
+            System.out.println("Registration data has been successfully saved to 'kol_registrations.dat'");
+        else
+            System.err.println("Error while saving registration data!");
     }
 
     public List<KOL> getKOLList() {

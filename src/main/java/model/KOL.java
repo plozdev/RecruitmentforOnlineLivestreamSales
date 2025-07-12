@@ -100,14 +100,16 @@ public class KOL implements Serializable {
     }
 
     public String KOLDetail() {
+        NumberFormat formatter = NumberFormat.getInstance();
         return String.format("KOL ID    : %s\n" +
                 "Name      : %s\n" +
                 "Phone     : %s\n" +
                 "Platform  : %s\n" +
-                "Followers : %d\n" +
-                "Commission: %s\n",
-                kolID,name,phoneNum,platform, followers, rate+"%");
+                "Followers : %s\n" +
+                "Commission: %s",
+                kolID,name,phoneNum,platform, formatter.format(followers), rate+"%");
     }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

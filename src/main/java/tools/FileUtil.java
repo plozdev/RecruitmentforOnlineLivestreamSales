@@ -63,25 +63,26 @@ public class FileUtil {
 
 
     // --- Phương thức ghi Object List ra file (dùng cho KOL data) ---
-    public <T> void writeObjectListToFile(List<T> objects, String fileName) {
+    public <T> boolean writeObjectListToFile(List<T> objects, String fileName) {
         // Đảm bảo thư mục cha tồn tại nếu đường dẫn có thư mục con
-        File file = new File(fileName);
+        File file = new File("./src/main/resources/" + fileName);
         try {
             if (file.getParentFile() != null && !file.getParentFile().exists()) {
                 file.getParentFile().mkdirs(); // Tạo thư mục nếu chưa có
             }
         } catch (SecurityException e) {
             logger.severe("Permission denied to create directories for file: " + fileName + " - " + e.getMessage());
-            throw new RuntimeException("Permission denied to write file: " + fileName, e);
+            return false;
         }
 
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(fileName)))) {
             oos.writeObject(objects);
             oos.flush();
             logger.info("Successfully saved " + objects.size() + " objects to " + fileName);
+            return true;
         } catch (IOException e) {
             logger.severe("Error writing object list to file '" + fileName + "': " + e.getMessage());
-            throw new RuntimeException("Failed to write object list to file: " + fileName, e);
+            return false;
         }
     }
 }
