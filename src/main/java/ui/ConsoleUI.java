@@ -2,6 +2,7 @@ package ui;
 
 import manager.KOLDisplay;
 import manager.KOLManager;
+import manager.Platform;
 import manager.PlatformDisplay;
 import tools.Input;
 
@@ -15,15 +16,17 @@ public class ConsoleUI {
             "7. Statistics of Registration Numbers by Platform\n" +
             "8. Save Data to File\n" +
             "9. Exit the Program\n";
-    private final KOLManager controller;
-    private final KOLDisplay display;
+    private final KOLManager kolManager;
+    private final KOLDisplay kolDisplay;
+    private final Platform platformManager;
     private final PlatformDisplay platformDisplay;
     private boolean isRunning = true;
     private final Input input;
     public ConsoleUI() {
         input = new Input();
-        controller = new KOLManager();
-        display = new KOLDisplay();
+        kolManager = new KOLManager();
+        kolDisplay = new KOLDisplay();
+        platformManager = new Platform();
         platformDisplay = new PlatformDisplay();
     }
 
@@ -31,7 +34,8 @@ public class ConsoleUI {
      * Starting point
      */
     public void start() {
-        boolean kolExists = !controller.isEmpty();
+        boolean kolExists = !kolManager.isEmpty();
+        boolean isSaved = true;
         while (isRunning) {
             System.out.println(menuOptions);
 
@@ -44,9 +48,10 @@ public class ConsoleUI {
             switch (choice) {
                 case 1:
                     //TODO: Register
-                    if (controller.add()) {
+                    if (kolManager.add()) {
                         System.out.println("Registration successful!");
                         kolExists = true;
+                        isSaved = false;
                     }
                     else
                         System.out.println("Registration failed! Returning to the menu...");
@@ -54,39 +59,48 @@ public class ConsoleUI {
                     break;
                 case 2:
                     //TODO: Update
-                    if (controller.update())
+                    if (kolManager.update()) {
                         System.out.println("Update registration successful!");
+                        isSaved = false;
+                    }
                     else
                         System.out.println("Update registration failed! Returning to the menu...");
 
                     break;
                 case 3:
                     //TODO: Display
-                    controller.listAllKOLs();
+                    kolManager.listAll();
                     break;
                 case 4:
                     //TODO: Delete
-                    if (controller.delete())
+                    if (kolManager.delete()) {
                         System.out.println("Delete registration successful!");
+                        isSaved = false;
+                    }
                     else
                         System.out.println("Delete registration failed! Returning to the menu...");
                     break;
                 case 5:
                     //TODO: Search
-                    display.displayKOLs(controller.searchingKOL(),"No one match the search criteria!");
+                    kolDisplay.displayKOLs(kolManager.searchingKOL(),"No one match the search criteria!");
                     break;
                 case 6:
                     //TODO: Filter data
-                    display.displayKOLs(controller.filterByCategories() ,"No KOLs have registered under this category!");
+                    kolDisplay.displayKOLs(kolManager.filterByCategories() ,"No KOLs have registered under this category!");
                     break;
                 case 7:
                     //TODO: Statistics
-                    platformDisplay.stat(controller);
+                    platformDisplay.stat(kolManager, platformManager);
                     break;
                 case 8:
-                    //TODO: Update
+                    //TODO: Save
+                    kolManager.saveData();
+                    isSaved = true;
                     break;
                 case 9:
+                    if (!isSaved) {
+                        //TODO: Warning to user
+                    }
                     isRunning = false;
                     break;
                 default:

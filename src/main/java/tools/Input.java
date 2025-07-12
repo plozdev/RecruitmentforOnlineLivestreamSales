@@ -1,6 +1,5 @@
 package tools;
 
-import manager.KOLManager;
 import model.KOL;
 
 import java.util.Scanner;
@@ -76,9 +75,9 @@ public class Input implements ValidationsUtils{
         while (!isExitsPlatformCode) {
             platform = getString("Enter platform code (YT01,TK01,FB01,IG01): ",null,"Invalid format!",isUpdate);
             if (platform.equalsIgnoreCase("YT01"))
-                platform = "Youtube";
+                platform = "YouTube";
             else if (platform.equalsIgnoreCase("TK01"))
-                platform = "Tiktok";
+                platform = "TikTok";
             else if (platform.equalsIgnoreCase("FB01"))
                 platform = "Facebook";
             else if (platform.equalsIgnoreCase("IG01"))

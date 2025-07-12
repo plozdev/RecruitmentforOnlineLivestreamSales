@@ -1,7 +1,6 @@
 package manager;
 
 import model.KOL;
-import model.Platform;
 
 import java.util.HashMap;
 
@@ -19,12 +18,12 @@ public class PlatformDisplay extends HashMap<String,PlatformDisplay> {
         this.aveRate = aveRate;
     }
 
-    private void preStat(KOLManager kolManager) {
-        for (Platform p : kolManager.getPlatformList()) {
+    private void preStat(KOLManager kolManager, Platform platform) {
+        for (Platform p : platform.getPlatformList()) {
             int num = 0;
             int rate = 0;
             for (KOL kol : kolManager.getKOLList()) {
-                if (kol.getPlatform().equals(p.getName())) {
+                if (kol.getPlatform().equalsIgnoreCase(p.getName())) {
                     num++;
                     rate += kol.getRate();
                 }
@@ -32,8 +31,8 @@ public class PlatformDisplay extends HashMap<String,PlatformDisplay> {
             this.put(p.getName(),new PlatformDisplay(p.getName(),p.getCode(),num,num==0 ? 0 : (double)rate/num));
         }
     }
-    public void stat(KOLManager kolManager) {
-        preStat(kolManager);
+    public void stat(KOLManager kolManager, Platform platform) {
+        preStat(kolManager, platform);
         System.out.println("Statistics of Registration by Platform:");
         System.out.println("----------------------------------------------------------");
         System.out.printf("%-18s | %s | %s\n","Platform","Number of KOLs","Avg. Commission Rate");
@@ -46,6 +45,6 @@ public class PlatformDisplay extends HashMap<String,PlatformDisplay> {
 
     @Override
     public String toString() {
-        return String.format("%-18s | %-14d | %-20s",platformName + "("+platformCode+")",numOfKOLs,aveRate+"%");
+        return String.format("%-18s | %-14d | %-20s",platformName + " ("+platformCode+")",numOfKOLs,aveRate+"%");
     }
 }

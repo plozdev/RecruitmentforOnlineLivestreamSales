@@ -1,7 +1,5 @@
 package model;
 
-import manager.KOLManager;
-
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Objects;

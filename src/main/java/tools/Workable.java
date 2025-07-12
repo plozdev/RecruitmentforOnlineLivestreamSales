@@ -4,7 +4,7 @@ public interface Workable {
     boolean add();
     boolean update ();
     boolean delete ();
-    void listAllKOLs();
+    void listAll();
     void readData();
     void saveData();
 }
