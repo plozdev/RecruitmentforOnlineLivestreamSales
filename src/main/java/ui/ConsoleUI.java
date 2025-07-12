@@ -100,6 +100,11 @@ public class ConsoleUI {
                 case 9:
                     if (!isSaved) {
                         //TODO: Warning to user
+                        System.out.println("Do you want to save the change before exiting? (Y/N)");
+                        if (input.getYesNo()) {
+                            kolManager.saveData();
+                            isSaved = true;
+                        }
                     }
                     isRunning = false;
                     break;

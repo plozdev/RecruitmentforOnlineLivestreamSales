@@ -6,9 +6,7 @@ import tools.Input;
 import tools.ValidationsUtils;
 import tools.Workable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 /******************************
@@ -127,7 +125,7 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
 
     @Override
     public void readData() {
-        List<KOL> KOLListLoaded = fileUtil.readObjectListFromFile("KOLs.dat");
+        List<KOL> KOLListLoaded = fileUtil.readObjectListFromFile("kol_registrations.dat");
         for (KOL kol : KOLListLoaded) {
             this.put(kol.getKolID(),kol);
         }
@@ -136,7 +134,17 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
 
     @Override
     public void saveData() {
-        fileUtil.writeObjectListToFile(new ArrayList<>(this.values()),"KOLs.dat");
+        //TODO: remove timer
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Saving data...");
+            }
+        };
+        timer.schedule(task, 2000);
+        fileUtil.writeObjectListToFile(new ArrayList<>(this.values()),"kol_registrations.dat");
+        System.out.println("Registration data has been successfully saved to 'kol_registrations.dat'");
     }
 
     public List<KOL> getKOLList() {
