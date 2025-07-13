@@ -108,10 +108,12 @@ public class Input implements ValidationsUtils{
             platform = getString("Enter platform code (YT01,TK01,FB01,IG01): ",null,"Invalid format!",isUpdate);
             platform = platform.toUpperCase();
 
-            if (pm.getPlatformName().containsKey(platform) || platform.isEmpty() && isUpdate) {
+            if (pm.getPlatformName().containsKey(platform)) {
                 platform = pm.getPlatformName().get(platform);
                 isExitsPlatformCode = true;
             }
+            else if (platform.isEmpty() && isUpdate)
+                isExitsPlatformCode = true;
             else System.out.println("The code isn't exists.");
         }
 
