@@ -65,7 +65,7 @@ public class FileUtil {
     // --- Phương thức ghi Object List ra file (dùng cho KOL data) ---
     public <T> boolean writeObjectListToFile(List<T> objects, String fileName) {
         // Đảm bảo thư mục cha tồn tại nếu đường dẫn có thư mục con
-        File file = new File("./src/main/resources/" + fileName);
+        File file = new File(fileName);
         try {
             if (file.getParentFile() != null && !file.getParentFile().exists()) {
                 file.getParentFile().mkdirs(); // Tạo thư mục nếu chưa có
