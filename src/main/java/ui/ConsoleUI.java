@@ -2,7 +2,7 @@ package ui;
 
 import manager.KOLDisplay;
 import manager.KOLManager;
-import manager.Platform;
+import manager.PlatformManager;
 import manager.PlatformDisplay;
 import tools.Input;
 
@@ -21,7 +21,7 @@ public class ConsoleUI {
             "9. Exit the Program\n";
     private final KOLManager kolManager;
     private final KOLDisplay kolDisplay;
-    private final Platform platformManager;
+    private final PlatformManager platformManager;
     private final PlatformDisplay platformDisplay;
     private boolean isRunning = true;
     private final Input input;
@@ -29,7 +29,7 @@ public class ConsoleUI {
         input = new Input();
         kolManager = new KOLManager();
         kolDisplay = new KOLDisplay();
-        platformManager = new Platform();
+        platformManager = new PlatformManager();
         platformDisplay = new PlatformDisplay();
     }
 
