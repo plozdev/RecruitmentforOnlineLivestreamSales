@@ -25,12 +25,14 @@ public class ConsoleUI {
     private final PlatformDisplay platformDisplay;
     private boolean isRunning = true;
     private final Input input;
-    public ConsoleUI() {
-        input = new Input();
-        kolManager = new KOLManager();
-        kolDisplay = new KOLDisplay();
-        platformManager = new PlatformManager();
-        platformDisplay = new PlatformDisplay();
+
+    public ConsoleUI(KOLManager kolManager, KOLDisplay kolDisplay,
+                     PlatformManager platformManager, PlatformDisplay platformDisplay, Input input) {
+        this.kolManager = kolManager;
+        this.kolDisplay = kolDisplay;
+        this.platformManager = platformManager;
+        this.platformDisplay = platformDisplay;
+        this.input = input;
     }
 
     /**********************

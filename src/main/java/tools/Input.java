@@ -92,7 +92,7 @@ public class Input implements ValidationsUtils{
      * @param isUpdate If true, allows empty input to keep old data
      * @return KOL object with user input
      */
-    public KOL getKol(boolean isUpdate) {
+    public KOL getKol(boolean isUpdate, PlatformManager pm) {
         if (isUpdate) {
             System.out.println("(leave blank to keep old data)");
         }
@@ -103,7 +103,6 @@ public class Input implements ValidationsUtils{
 
         String platform = "";
         boolean isExitsPlatformCode = false;
-        PlatformManager pm = new PlatformManager();
 
         while (!isExitsPlatformCode) {
             platform = getString("Enter platform code (YT01,TK01,FB01,IG01): ",null,"Invalid format!",isUpdate);

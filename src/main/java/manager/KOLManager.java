@@ -7,7 +7,7 @@ import tools.ValidationsUtils;
 import tools.Workable;
 
 import java.util.*;
-//import java.util.logging.Logger;
+import java.util.logging.Logger;
 
 /******************************
  * Class for handle kol logic
@@ -16,19 +16,22 @@ import java.util.*;
 public class KOLManager implements Workable {
     private final TreeMap<String,KOL> kols;
     private final KOLDisplay display;
+    private final PlatformManager pm;
     private final FileUtil fileUtil;
-//    private final Logger logger = Logger.getLogger(this.getClass().getName());
+    private final Logger logger;
     private final Input input;
 
     /***************
      * Constructor
      **************/
-    public KOLManager() {
+    public KOLManager(PlatformManager pm, KOLDisplay display, FileUtil fileUtil, Input input, Logger logger) {
         //TODO: load data
         this.kols = new TreeMap<>();
-        this.display = new KOLDisplay();
-        this.fileUtil = new FileUtil();
-        this.input = new Input();
+        this.pm = pm;
+        this.display = display;
+        this.fileUtil = fileUtil;
+        this.input = input;
+        this.logger = logger;
         readData(); //LOAD KOL List
     }
 
@@ -38,7 +41,6 @@ public class KOLManager implements Workable {
      * Add KOL with validation data
      * @return true if adds successful, otherwise false
      */
-    @Override
     public boolean add() {
         String id = input.getString("Enter KOL Id: ", ValidationsUtils.ID,"Invalid format!",false);
         id = id.toUpperCase(); //Make sure to valid in any format
@@ -47,7 +49,7 @@ public class KOLManager implements Workable {
             return false;
         }
 
-        KOL newKOL = input.getKol(false);
+        KOL newKOL = input.getKol(false,pm);
         newKOL.setKolID(id);
         kols.put(id,newKOL);
         return true;
@@ -58,7 +60,6 @@ public class KOLManager implements Workable {
      * If user enter nothing, skip
      * @return true if update successful, otherwise false
      */
-    @Override
     public boolean update() {
         String id = input.getString("Enter KOL Id to update: ",ValidationsUtils.ID,
                 "Invalid format!", false);
@@ -71,7 +72,7 @@ public class KOLManager implements Workable {
         display.displayKOLDetails(kols.get(id));
 
         KOL oldKOL = kols.get(id);
-        KOL newKOL = input.getKol(true);
+        KOL newKOL = input.getKol(true, pm);
         if (newKOL.getName().isEmpty()) newKOL.setName(oldKOL.getName());
         if (newKOL.getPhoneNum().isEmpty()) newKOL.setPhoneNum(oldKOL.getPhoneNum());
         if (newKOL.getEmail().isEmpty()) newKOL.setEmail(oldKOL.getEmail());

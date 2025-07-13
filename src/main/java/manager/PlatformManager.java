@@ -14,14 +14,16 @@ import java.util.logging.Logger;
  */
 public class PlatformManager implements Workable {
     private final HashMap<String,Platform> platforms;
-    private final FileUtil fileUtil = new FileUtil();
-    private final Logger logger = Logger.getLogger("Platform");
+    private final FileUtil fileUtil;
+    private final Logger logger;
 
     /**
      * Default Constructor + Load data
      */
-    public PlatformManager() {
+    public PlatformManager(FileUtil fileUtil, Logger logger) {
         this.platforms = new HashMap<>();
+        this.fileUtil = fileUtil;
+        this.logger = logger;
         readData();
     }
 

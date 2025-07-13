@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * Class for read/write files
  **************************/
 public class FileUtil {
-    private final Logger logger = Logger.getLogger(this.getClass().getName());
+    private final Logger logger = Logger.getLogger("FileUtil");
 
     //----------- Doc CSV tu Classpath ---------------
     public List<String> readPlatformList(String resName){
