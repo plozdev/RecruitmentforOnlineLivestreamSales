@@ -1,24 +1,24 @@
 # KOL Recruitment Management System
 
-A console-based application developed in Java for managing the recruitment information of Key Opinion Leaders (KOLs) for an online livestream sales campaign[cite: 3, 13]. [cite\_start]This project is an academic assignment (J1.L.P0031) that emphasizes the principles of Object-Oriented Programming (OOP)[cite: 1, 8, 20].
+A console-based application developed in Java for managing the recruitment information of Key Opinion Leaders (KOLs) for an online livestream sales campaign. This project is an academic assignment (J1.L.P0031) that emphasizes the principles of Object-Oriented Programming (OOP).
 
 ## About The Project
 
-This program enables a marketing team to manage the entire lifecycle of KOL recruitment for a strategic campaign titled "Digital Influencers Drive Sales"[cite: 12, 13]. It handles new registrations, updates, data filtering, and statistical reporting, all through a user-friendly command-line interface. The system persists data by saving it to a binary file.
+This program enables a marketing team to manage the entire lifecycle of KOL recruitment for a strategic campaign titled "Digital Influencers Drive Sales". It handles new registrations, updates, data filtering, and statistical reporting, all through a user-friendly command-line interface. The system persists data by saving it to a binary file.
 
 ## Features
 
-[cite\_start]The application provides the following core functionalities[cite: 23]:
+The application provides the following core functionalities:
 
-  * **New Registration**: Add a new KOL to the system with input validation[cite: 24].
-  * **Update Information**: Modify the details of an existing KOL[cite: 25]. [cite\_start]The system intelligently keeps old data if no new input is provided[cite: 61].
-  * **Display List**: Show a formatted list of all registered KOLs[cite: 26].
-  * **Delete Registration**: Remove a KOL's record from the system[cite: 27].
-  * **Search by Name**: Find KOLs based on a full or partial name search[cite: 28].
-  * **Filter by Category**: Display KOLs belonging to a specific category (e.g., Beauty, Fashion, Gaming)[cite: 29].
-  * **Platform Statistics**: Generate and display statistics on the number of KOLs registered for each social media platform (e.g., TikTok, Shopee)[cite: 30, 31].
-  * **Save to File**: Persist all registration data to a file named `kol_registrations.dat`[cite: 32].
-  * **Exit**: Terminate the program, with a safety prompt to save any unsaved changes[cite: 33].
+  * **New Registration**: Add a new KOL to the system with input validation.
+  * **Update Information**: Modify the details of an existing KOL. The system intelligently keeps old data if no new input is provided.
+  * **Display List**: Show a formatted list of all registered KOLs.
+  * **Delete Registration**: Remove a KOL's record from the system.
+  * **Search by Name**: Find KOLs based on a full or partial name search.
+  * **Filter by Category**: Display KOLs belonging to a specific category (e.g., Beauty, Fashion, Gaming).
+  * **Platform Statistics**: Generate and display statistics on the number of KOLs registered for each social media platform (e.g., TikTok, Shopee).
+  * **Save to File**: Persist all registration data to a file named `kol_registrations.dat`.
+  * **Exit**: Terminate the program, with a safety prompt to save any unsaved changes.
 
 ## Built With
 
