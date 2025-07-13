@@ -7,7 +7,7 @@ import tools.Workable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-//import java.util.logging.Logger;
+import java.util.logging.Logger;
 
 /**
  * Key: code, Value: code, name, des
@@ -15,7 +15,7 @@ import java.util.List;
 public class PlatformManager implements Workable {
     private final HashMap<String,Platform> platforms;
     private final FileUtil fileUtil = new FileUtil();
-//    private final Logger logger = Logger.getLogger("Platform");
+    private final Logger logger = Logger.getLogger("Platform");
 
     /**
      * Default Constructor + Load data
@@ -50,6 +50,18 @@ public class PlatformManager implements Workable {
         HashMap<String,String> map = new HashMap<>();
         for (Platform platform : platforms.values()) {
             map.put(platform.getName(),platform.getCode());
+        }
+        return map;
+    }
+
+    /**
+     * Gets the platform name by platform code
+     * @return HashMap of platform code - name
+     */
+    public HashMap<String,String> getPlatformName() {
+        HashMap<String,String> map = new HashMap<>();
+        for (Platform platform : platforms.values()) {
+            map.put(platform.getCode(),platform.getName());
         }
         return map;
     }
@@ -94,7 +106,7 @@ public class PlatformManager implements Workable {
             }
 //            else logger.warning("KOLList.csv is incorrect");
         }
-//        logger.info("KOLList.csv loaded successfully! - " + this.size());
+//        logger.info("KOLList.csv loaded successfully! - " + platforms.size());
 
     }
 

@@ -50,7 +50,7 @@ public class FileUtil {
 
         try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Paths.get(fileName)))) {
             objects = (List<T>) ois.readObject();
-            logger.info("Successfully loaded " + objects.size() + " objects from " + fileName);
+//            logger.info("Successfully loaded " + objects.size() + " objects from " + fileName);
         } catch (EOFException e) {
             // File rỗng, không có gì để đọc
             logger.info("Data file " + fileName + " is empty or malformed EOF. Starting with empty list.");
