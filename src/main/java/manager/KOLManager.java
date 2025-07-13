@@ -13,7 +13,8 @@ import java.util.*;
  * Class for handle kol logic
  * Key: KOL ID, Value KOL object
  ******************************/
-public class KOLManager extends HashMap<String,KOL> implements Workable {
+public class KOLManager implements Workable {
+    private final TreeMap<String,KOL> kols;
     private final KOLDisplay display;
     private final FileUtil fileUtil;
 //    private final Logger logger = Logger.getLogger(this.getClass().getName());
@@ -24,6 +25,7 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
      **************/
     public KOLManager() {
         //TODO: load data
+        this.kols = new TreeMap<>();
         this.display = new KOLDisplay();
         this.fileUtil = new FileUtil();
         this.input = new Input();
@@ -40,14 +42,14 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
     public boolean add() {
         String id = input.getString("Enter KOL Id: ", ValidationsUtils.ID,"Invalid format!",false);
         id = id.toUpperCase(); //Make sure to valid in any format
-        if (this.containsKey(id)) {
-            System.out.println("This KOL has not registered yet.");
+        if (kols.containsKey(id)) {
+            System.out.println("This KOL already exists!.");
             return false;
         }
 
         KOL newKOL = input.getKol(false);
         newKOL.setKolID(id);
-        this.put(id,newKOL);
+        kols.put(id,newKOL);
         return true;
     }
 
@@ -61,14 +63,14 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
         String id = input.getString("Enter KOL Id to update: ",ValidationsUtils.ID,
                 "Invalid format!", false);
         id = id.toUpperCase();//Make sure to valid in any format
-        if (!this.containsKey(id)) {
+        if (!kols.containsKey(id)) {
             System.out.println("This KOL haven't registered yet. Try another id!");
             return false;
         }
 
-        display.displayKOLDetails(this.get(id));
+        display.displayKOLDetails(kols.get(id));
 
-        KOL oldKOL = this.get(id);
+        KOL oldKOL = kols.get(id);
         KOL newKOL = input.getKol(true);
         if (newKOL.getName().isEmpty()) newKOL.setName(oldKOL.getName());
         if (newKOL.getPhoneNum().isEmpty()) newKOL.setPhoneNum(oldKOL.getPhoneNum());
@@ -78,9 +80,9 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
         newKOL.updateRate();
         newKOL.setKolID(id);
 
-        this.put(id,newKOL);
+        kols.put(id,newKOL);
 
-        display.displayKOLDetails(this.get(id));
+        display.displayKOLDetails(kols.get(id));
 
         return true;
     }
@@ -96,14 +98,14 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
                 "Invalid format!", false);
         id = id.toUpperCase(); //Make sure to valid in any format
 
-        if (!this.containsKey(id)) {
+        if (!kols.containsKey(id)) {
             System.out.println("This KOL haven't registered yet. Try another id!");
             return false;
         }
-        display.displayKOLDetails(this.get(id));
+        display.displayKOLDetails(kols.get(id));
         System.out.println("Are you sure to delete this KOL? (y/n): ");
         if (input.getYesNo()) {
-            this.remove(id);
+            kols.remove(id);
             return true;
         }
         return false;
@@ -152,7 +154,7 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
     public void readData() {
         List<KOL> KOLListLoaded = fileUtil.readObjectListFromFile("kol_registrations.dat");
         for (KOL kol : KOLListLoaded) {
-            this.put(kol.getKolID(),kol);
+            kols.put(kol.getKolID(),kol);
         }
 //        logger.info("KOLList.dat loaded successfully! - " + this.size());
     }
@@ -168,7 +170,7 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        if (fileUtil.writeObjectListToFile(new ArrayList<>(this.values()),"kol_registrations.dat"))
+        if (fileUtil.writeObjectListToFile(new ArrayList<>(kols.values()),"kol_registrations.dat"))
             System.out.println("Registration data has been successfully saved to 'kol_registrations.dat'");
         else
             System.err.println("Error while saving registration data!");
@@ -178,7 +180,14 @@ public class KOLManager extends HashMap<String,KOL> implements Workable {
      * @return KOL List
      */
     public List<KOL> getKOLList() {
-        return new ArrayList<>(this.values());
+        return new ArrayList<>(kols.values());
     }
 
+    /**
+     * Checks if there are kol exists
+     * @return true if yes, otherwise no
+     */
+    public boolean isEmpty() {
+        return kols.isEmpty();
+    }
 }
