@@ -4,13 +4,32 @@ import model.KOL;
 
 import java.util.Scanner;
 
+/**
+ * Utility class for handling user input and validation.
+ */
 public class Input implements ValidationsUtils{
     private final Scanner scanner;
+
+    /**
+     * Initializes the input scanner.
+     */
     public Input() {
         scanner = new Scanner(System.in);
     }
+
+    /**
+     * Closes the scanner resource.
+     */
     public void close() { scanner.close(); }
 
+    /**
+     * Gets a validated string input from the user.
+     * @param msg Prompt message
+     * @param pattern Regex pattern for validation
+     * @param errorMsg Error message for invalid input
+     * @param allowEmpty Allow empty input or not
+     * @return Validated string input
+     */
     public String getString(String msg, String pattern, String errorMsg, boolean allowEmpty) {
         while (true) {
             System.out.print(msg);
@@ -36,6 +55,13 @@ public class Input implements ValidationsUtils{
         }
     }
 
+    /**
+     * Gets a validated long value from the user.
+     * @param msg Prompt message
+     * @param errorMsg Error message for invalid input
+     * @param allowEmpty Allow empty input or not
+     * @return Validated long value, or -1 if empty and allowed
+     */
     public long getLong(String msg, String errorMsg, boolean allowEmpty) {
         while (true) {
             System.out.print(msg);
@@ -60,6 +86,11 @@ public class Input implements ValidationsUtils{
         }
     }
 
+    /**
+     * Prompts user to input KOL information.
+     * @param isUpdate If true, allows empty input to keep old data
+     * @return KOL object with user input
+     */
     public KOL getKol(boolean isUpdate) {
         if (isUpdate) {
             System.out.println("(leave blank to keep old data)");
@@ -95,6 +126,10 @@ public class Input implements ValidationsUtils{
         return new KOL(name,phone,email,platform,followersCnt);
     }
 
+    /**
+     * Prompts user for a yes/no answer.
+     * @return true if user enters 'y', false if 'n'
+     */
     public boolean getYesNo() {
         String input ;
 
@@ -113,6 +148,12 @@ public class Input implements ValidationsUtils{
     ///
     ///
     ///////////////////////
+    /**
+     * Validates a string against a regex pattern.
+     * @param s Input string
+     * @param regex Regex pattern
+     * @return true if valid, false otherwise
+     */
     @Override
     public boolean isValid(String s, String regex) {
         if (s==null || regex==null) {

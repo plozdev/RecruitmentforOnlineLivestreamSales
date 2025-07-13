@@ -8,18 +8,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
-/*******************
- * Class for handle platform logic
- * Key: Platform code,Value: Platform object
+/**
+ * Class for handling platform logic.
+ * Key: Platform code, Value: Platform object.
  */
 public class Platform extends HashMap<String, Platform> implements Workable {
     private String code, name, des;
     private FileUtil fileUtil = new FileUtil();
     private Logger logger = Logger.getLogger("Platform");
+
+    /**
+     * Default constructor. Loads platform data.
+     */
     public Platform() {
         readData();
     }
 
+    /**
+     * Constructor with fields.
+     */
     public Platform(String code, String name, String des) {
         this.code = code;
         this.name = name;
@@ -50,10 +57,18 @@ public class Platform extends HashMap<String, Platform> implements Workable {
         this.des = des;
     }
 
+    /**
+     * Gets the list of platforms.
+     * @return List of Platform objects
+     */
     public List<Platform> getPlatformList() {
         return new ArrayList<>(this.values());
     }
 
+    /**
+     * Gets the platform hashmap.
+     * @return HashMap of platforms
+     */
     public HashMap<String, Platform> getPlatformHashMap() {
         return this;
     }
@@ -78,6 +93,9 @@ public class Platform extends HashMap<String, Platform> implements Workable {
 
     }
 
+    /**
+     * Reads platform data from file.
+     */
     @Override
     public void readData() {
         List<String> lines = fileUtil.readPlatformList("KOLList.csv");
