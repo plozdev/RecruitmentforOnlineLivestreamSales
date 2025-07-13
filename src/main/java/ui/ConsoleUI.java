@@ -6,6 +6,9 @@ import manager.Platform;
 import manager.PlatformDisplay;
 import tools.Input;
 
+/**
+ * UI console for the program
+ */
 public class ConsoleUI {
     private final String menuOptions ="1. New Registration\n" +
             "2. Update Registration Information\n" +
