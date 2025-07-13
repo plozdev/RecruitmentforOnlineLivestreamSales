@@ -95,7 +95,7 @@ public class KOL implements Serializable {
     @Override
     public String toString() {
         NumberFormat formatter = NumberFormat.getInstance();
-        return String.format("%-10s | %-18s | %-10s | %-10s | %-12s | %-10s",
+        return String.format("%-10s | %-15s | %-10s | %-10s | %-15s | %-10s ",
                 kolID, name, phoneNum,platform,formatter.format(followers), rate+"%");
     }
 
