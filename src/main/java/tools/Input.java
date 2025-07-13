@@ -1,5 +1,6 @@
 package tools;
 
+import manager.PlatformManager;
 import model.KOL;
 
 import java.util.Scanner;
@@ -102,23 +103,17 @@ public class Input implements ValidationsUtils{
 
         String platform = "";
         boolean isExitsPlatformCode = false;
+        PlatformManager pm = new PlatformManager();
 
         while (!isExitsPlatformCode) {
             platform = getString("Enter platform code (YT01,TK01,FB01,IG01): ",null,"Invalid format!",isUpdate);
-            if (platform.equalsIgnoreCase("YT01"))
-                platform = "YouTube";
-            else if (platform.equalsIgnoreCase("TK01"))
-                platform = "TikTok";
-            else if (platform.equalsIgnoreCase("FB01"))
-                platform = "Facebook";
-            else if (platform.equalsIgnoreCase("IG01"))
-                platform = "Instagram";
+            platform = platform.toUpperCase();
 
-            if (!platform.isEmpty() || platform.isEmpty() && isUpdate)
-                break; //Break point
-
-            System.out.println("The code isn't exists.");
-
+            if (pm.getPlatformName().containsKey(platform) || platform.isEmpty() && isUpdate) {
+                platform = pm.getPlatformName().get(platform);
+                isExitsPlatformCode = true;
+            }
+            else System.out.println("The code isn't exists.");
         }
 
         long followersCnt = getLong("Enter followers: ","Invalid number!",isUpdate);
